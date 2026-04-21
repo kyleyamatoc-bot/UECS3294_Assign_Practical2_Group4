@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Requests\Booking;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProcessBookingPaymentRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'payment_method' => ['required', 'in:Card,FPX,E-Wallet'],
+            'card_number' => ['required_if:payment_method,Card', 'nullable', 'digits:16'],
+            'bank' => ['required_if:payment_method,FPX', 'nullable', 'string', 'max:40'],
+            'wallet_phone' => ['required_if:payment_method,E-Wallet', 'nullable', 'regex:/^\d{10,11}$/'],
+        ];
+    }
+}
