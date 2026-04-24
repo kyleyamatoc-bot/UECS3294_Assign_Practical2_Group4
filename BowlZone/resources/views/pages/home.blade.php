@@ -11,7 +11,7 @@
         <div class="hero-content">
             @auth
             <h1>Welcome back, {{ auth()->user()->username }}!</h1>
-            <p>Your ultimate destination for bowling fun and shopping.</p>
+            <p>Your ultimate destination for bowling fun and shopping.</p><b></b>
             <a href="{{ route('bookings.create') }}" class="btn-primary">Book Now</a>
             <a href="{{ route('store.index') }}" class="btn-primary">Visit Store</a>
             @else
