@@ -53,35 +53,35 @@
 
                 <!-- Admin Replies -->
                 @if($message->replies->count() > 0)
-                    @foreach($message->replies as $reply)
-                    <div class="message-bubble {{ $reply->reply_type === 'admin' ? 'admin-message' : 'user-response' }}">
-                        <div class="bubble-header">
-                            <span class="bubble-sender">
-                                @if($reply->reply_type === 'admin')
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#dc3545"/>
-                                    </svg>
-                                    {{ $reply->admin->first_name }} {{ $reply->admin->last_name }}
-                                @else
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#0056b3"/>
-                                    </svg>
-                                    You (Reply)
-                                @endif
-                            </span>
-                            <span class="bubble-time">{{ $reply->created_at->format('M d, H:i') }}</span>
-                        </div>
-                        <div class="bubble-content">
-                            {{ $reply->reply_message }}
-                        </div>
+                @foreach($message->replies as $reply)
+                <div class="message-bubble {{ $reply->reply_type === 'admin' ? 'admin-message' : 'user-response' }}">
+                    <div class="bubble-header">
+                        <span class="bubble-sender">
+                            @if($reply->reply_type === 'admin')
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#dc3545" />
+                            </svg>
+                            {{ $reply->admin->first_name }} {{ $reply->admin->last_name }}
+                            @else
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#0056b3" />
+                            </svg>
+                            You (Reply)
+                            @endif
+                        </span>
+                        <span class="bubble-time">{{ $reply->created_at->format('M d, H:i') }}</span>
                     </div>
-                    @endforeach
+                    <div class="bubble-content">
+                        {{ $reply->reply_message }}
+                    </div>
+                </div>
+                @endforeach
                 @else
-                    <div class="no-replies-yet">
-                        <div class="no-replies-icon">⏳</div>
-                        <p>Waiting for admin response...</p>
-                        <small>We typically respond within 24-48 hours</small>
-                    </div>
+                <div class="no-replies-yet">
+                    <div class="no-replies-icon">⏳</div>
+                    <p>Waiting for admin response...</p>
+                    <small>We typically respond within 24-48 hours</small>
+                </div>
                 @endif
 
                 <!-- Reply Form -->
@@ -96,10 +96,9 @@
                                 name="reply_message"
                                 placeholder="Type your response here..."
                                 rows="4"
-                                minlength="5"
-                            ></textarea>
+                                minlength="5"></textarea>
                             @error('reply_message')
-                                <span class="error-text">{{ $message }}</span>
+                            <span class="error-text">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="reply-submit-wrapper">
@@ -113,7 +112,7 @@
                 @else
                 <div class="message-solved-notice">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0zm-2 15l-5-5 1.4-1.4L8 12.2l9.6-9.6L19 4z" fill="#28a745"/>
+                        <path d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0zm-2 15l-5-5 1.4-1.4L8 12.2l9.6-9.6L19 4z" fill="#28a745" />
                     </svg>
                     This conversation has been resolved and is now closed.
                 </div>
@@ -143,6 +142,7 @@
     .message.success {
         display: none !important;
     }
+
     /* Support Messages Container */
     .support-messages-container {
         margin-top: 3rem;
@@ -353,6 +353,7 @@
             opacity: 0;
             transform: translateY(10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -431,7 +432,6 @@
     .reply-form-group textarea.error-border {
         border-color: #dc3545;
         background-color: #fff5f5;
-    }
         color: #dc3545;
         font-size: 0.85rem;
         margin-top: 0.25rem;
@@ -664,7 +664,8 @@
         }
 
         .reply-form-group textarea {
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
+            /* Prevents zoom on iOS */
         }
     }
 
