@@ -26,7 +26,6 @@ class StoreContactMessageRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],
-            'phone' => ['nullable', 'regex:/^\d{10,15}$/'],
             'email' => ['required', 'email', 'max:150'],
             'subject' => ['required', 'string', 'max:100'],
             'inquiry_type' => ['required', 'in:general,booking,complaint,suggestion'],

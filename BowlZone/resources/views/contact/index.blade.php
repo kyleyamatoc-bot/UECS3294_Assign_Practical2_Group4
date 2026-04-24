@@ -6,6 +6,12 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+<style>
+    /* Hide top error messages on contact page */
+    .message.error {
+        display: none !important;
+    }
+</style>
 @endsection
 
 @section('scripts')
@@ -37,14 +43,6 @@
                         value="{{ old('last_name', auth()->user()->last_name ?? '') }}"
                         required>
                     @error('last_name')<span class="error">{{ $message }}</span>@enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone"
-                        placeholder="0123456789"
-                        value="{{ old('phone') }}">
-                    @error('phone')<span class="error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">

@@ -20,7 +20,6 @@ class ContactController extends Controller
             'user_id' => auth()->id(),
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'phone' => $request->phone,
             'email' => $request->email,
             'subject' => $request->subject,
             'inquiry_type' => $request->inquiry_type,

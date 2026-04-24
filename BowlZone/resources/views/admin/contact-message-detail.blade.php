@@ -69,13 +69,21 @@
                 <h3>Conversation</h3>
 
                 @forelse($message->replies as $reply)
-                <div class="reply-message admin-reply">
+                <div class="reply-message {{ $reply->reply_type === 'admin' ? 'admin-reply' : 'user-reply-admin' }}">
                     <div class="reply-header">
-                        <strong class="reply-author">
-                            @if($reply->admin)
-                            {{ $reply->admin->first_name }} {{ $reply->admin->last_name }} (Admin)
+                        <strong class="reply-author {{ $reply->reply_type === 'admin' ? 'admin-author' : 'user-author' }}">
+                            @if($reply->reply_type === 'admin')
+                                @if($reply->admin)
+                                {{ $reply->admin->first_name }} {{ $reply->admin->last_name }} (Admin)
+                                @else
+                                Admin (Deleted)
+                                @endif
                             @else
-                            Admin (Deleted)
+                                @if($reply->user)
+                                {{ $reply->user->username }} (Reply)
+                                @else
+                                User (Deleted) (Reply)
+                                @endif
                             @endif
                         </strong>
                         <span class="reply-date">
@@ -108,7 +116,6 @@
                         <label for="status">Mark as</label>
                         <select id="status" name="status" required>
                             <option value="pending" {{ old('status', $message->status) === 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="read" {{ old('status', $message->status) === 'read' ? 'selected' : '' }}>Read</option>
                             <option value="solved" {{ old('status', $message->status) === 'solved' ? 'selected' : '' }}>Solved ✓</option>
                         </select>
                         @error('status')<span class="error">{{ $errors->first('status') }}</span>@enderror

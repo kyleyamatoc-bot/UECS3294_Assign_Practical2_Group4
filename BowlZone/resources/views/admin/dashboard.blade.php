@@ -81,18 +81,51 @@
         <h2>Quick Actions</h2>
         <div class="action-buttons">
             <a href="{{ route('admin.users') }}" class="action-btn action-btn-primary">
-                👥 Manage Users
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
+                1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 
+                1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                        fill="currentColor" />
+                </svg>
+                Manage Users
             </a>
+
             <a href="{{ route('admin.contact-messages') }}" class="action-btn action-btn-primary">
-                📧 View Contact Messages
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16v12H5.17L4 17.17V4zm0-2c-1.1 
+                0-2 .9-2 2v18l4-4h16c1.1 0 2-.9 
+                2-2V4c0-1.1-.9-2-2-2H4z"
+                        fill="currentColor" />
+                </svg>
+                View Contact Messages
             </a>
+
             <a href="{{ route('admin.bookings') }}" class="action-btn action-btn-primary">
-                📅 Manage Bookings
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 
+                0-2 .9-2 2v16c0 1.1.9 2 
+                2 2h14c1.1 0 2-.9 
+                2-2V5c0-1.1-.9-2-2-2zm0 
+                18H5V8h14v13z"
+                        fill="currentColor" />
+                </svg>
+                Manage Bookings
             </a>
+
             <a href="{{ route('admin.orders') }}" class="action-btn action-btn-primary">
-                📦 Manage Orders
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6h-4l-2-2H10L8 
+                6H4c-1.1 0-2 .9-2 
+                2v12c0 1.1.9 2 
+                2 2h16c1.1 0 2-.9 
+                2-2V8c0-1.1-.9-2-2-2zm0 
+                14H4V8h16v12z"
+                        fill="currentColor" />
+                </svg>
+                Manage Orders
             </a>
         </div>
     </div>
+
 </div>
 @endsection

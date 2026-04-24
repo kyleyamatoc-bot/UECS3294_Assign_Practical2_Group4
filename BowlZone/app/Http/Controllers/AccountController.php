@@ -13,7 +13,7 @@ class AccountController extends Controller
 
         $bookings = $user->bookings()->latest('booking_date')->paginate(5, ['*'], 'bookings_page');
         $orders = $user->orders()->with('items')->latest()->paginate(5, ['*'], 'orders_page');
-        $messages = $user->contactMessages()->with('replies.admin')->latest()->paginate(5, ['*'], 'messages_page');
+        $messages = $user->contactMessages()->with('replies.admin', 'replies.user')->latest()->paginate(5, ['*'], 'messages_page');
 
         return view('account.index', compact('user', 'bookings', 'orders', 'messages'));
     }

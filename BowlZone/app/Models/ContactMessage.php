@@ -13,7 +13,6 @@ class ContactMessage extends Model
         'user_id',
         'first_name',
         'last_name',
-        'phone',
         'email',
         'subject',
         'inquiry_type',

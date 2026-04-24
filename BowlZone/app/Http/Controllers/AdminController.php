@@ -143,4 +143,79 @@ class AdminController extends Controller
 
         return view('admin.users', compact('users'));
     }
+
+    /**
+     * Show edit user form
+     */
+    public function editUser(User $user)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($user->is_admin) {
+            abort(403, 'Cannot edit admin users');
+        }
+
+        return view('admin.users-edit', compact('user'));
+    }
+
+    /**
+     * Update user
+     */
+    public function updateUser(Request $request, User $user)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($user->is_admin) {
+            abort(403, 'Cannot edit admin users');
+        }
+
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'username' => ['required', 'string', 'min:4', 'max:50', 'alpha_dash', 'unique:users,username,' . $user->id],
+            'email' => ['required', 'email', 'max:150', 'unique:users,email,' . $user->id],
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->route('admin.users')
+            ->with('success', 'User updated successfully.');
+    }
+
+    /**
+     * Delete user
+     */
+    public function deleteUser(Request $request, User $user)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($user->is_admin) {
+            abort(403, 'Cannot delete admin users');
+        }
+
+        $deleteOption = $request->input('delete_option', 'soft'); // 'soft' or 'hard'
+
+        if ($deleteOption === 'hard') {
+            // Hard delete - cascade delete related data
+            $user->delete();
+            return redirect()->route('admin.users')
+                ->with('success', 'User and all associated data deleted permanently.');
+        } else {
+            // Soft delete - just remove account but keep data for records
+            $user->update([
+                'username' => 'deleted_' . $user->id . '_' . time(),
+                'email' => 'deleted_' . $user->id . '@deleted.local',
+                'password' => null,
+            ]);
+
+            return redirect()->route('admin.users')
+                ->with('success', 'User account deactivated. Data retained for records.');
+        }
+    }
 }

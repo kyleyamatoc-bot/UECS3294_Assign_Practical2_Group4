@@ -6,6 +6,12 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+<style>
+    /* Hide top success messages on thank-you page */
+    .message.success {
+        display: none !important;
+    }
+</style>
 @endsection
 
 @section('scripts')

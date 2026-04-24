@@ -248,7 +248,7 @@
 
 /* Action Links */
 .action-link {
-    color: #dc3545;
+    color: #0056b3;
     text-decoration: none;
     font-weight: 600;
     margin-right: 0.5rem;
@@ -259,15 +259,17 @@
 }
 
 .action-link:hover {
-    color: #a02834;
+    color: #003d82;
+    text-decoration: underline;
 }
 
 .action-link-danger {
-    color: #d9534f;
+    color: #dc3545;
 }
 
 .action-link-danger:hover {
-    color: #ac2925;
+    color: #a02834;
+    text-decoration: underline;
 }
 
 /* Detail Container */
@@ -446,6 +448,11 @@
     background: #fff5f5;
 }
 
+.user-reply-admin {
+    border-left-color: #0056b3;
+    background: #e3f2fd;
+}
+
 .reply-header {
     display: flex;
     justify-content: space-between;
@@ -456,6 +463,10 @@
 .reply-author {
     color: #dc3545;
     font-weight: 600;
+}
+
+.reply-author.user-author {
+    color: #0056b3;
 }
 
 .reply-date {

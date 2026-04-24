@@ -64,9 +64,9 @@
                                     {{ $reply->admin->first_name }} {{ $reply->admin->last_name }}
                                 @else
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#007bff"/>
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 8c-1.7 0-3.2-.8-4.2-2 .5-1.3 1.9-2.2 3.5-2.2s3 .9 3.5 2.2c-1 1.2-2.5 2-4.2 2z" fill="#0056b3"/>
                                     </svg>
-                                    {{ $reply->user->first_name }} {{ $reply->user->last_name }}
+                                    You (Reply)
                                 @endif
                             </span>
                             <span class="bubble-time">{{ $reply->created_at->format('M d, H:i') }}</span>
@@ -87,7 +87,7 @@
                 <!-- Reply Form -->
                 @if($message->status !== 'solved')
                 <div class="user-reply-form-container">
-                    <form action="{{ route('contact.reply', $message->id) }}" method="POST" class="user-reply-form">
+                    <form action="{{ route('contact.reply', $message->id) }}" method="POST" class="user-reply-form" onsubmit="handleReplySubmit(event)">
                         @csrf
                         <div class="reply-form-group">
                             <label for="reply_{{ $message->id }}">Your Reply</label>
@@ -96,13 +96,18 @@
                                 name="reply_message"
                                 placeholder="Type your response here..."
                                 rows="4"
-                                required
+                                minlength="5"
                             ></textarea>
                             @error('reply_message')
                                 <span class="error-text">{{ $message }}</span>
                             @enderror
                         </div>
-                        <button type="submit" class="btn-submit-user-reply">Send Reply</button>
+                        <div class="reply-submit-wrapper">
+                            <button type="submit" class="btn-submit-user-reply">Send Reply</button>
+                            <div class="reply-success-message" style="display:none;">
+                                ✓ Your reply has been sent to the admin. Please be patient and avoid sending multiple replies.
+                            </div>
+                        </div>
                     </form>
                 </div>
                 @else
@@ -134,6 +139,10 @@
 </div>
 
 <style>
+    /* Hide top success messages on account page */
+    .message.success {
+        display: none !important;
+    }
     /* Support Messages Container */
     .support-messages-container {
         margin-top: 3rem;
@@ -357,10 +366,17 @@
         margin-right: 2rem;
     }
 
-    /* User Response Message */
+    /* Admin Message - Red Color */
+    .admin-message {
+        background: #ffebee;
+        border-left: 4px solid #dc3545;
+        margin-left: 2rem;
+    }
+
+    /* User Response Message - Darker Blue */
     .user-response {
-        background: #f0f4f8;
-        border-left: 4px solid #007bff;
+        background: #e3f2fd;
+        border-left: 4px solid #0056b3;
         margin-left: 2rem;
     }
 
@@ -412,7 +428,10 @@
         color: #999;
     }
 
-    .error-text {
+    .reply-form-group textarea.error-border {
+        border-color: #dc3545;
+        background-color: #fff5f5;
+    }
         color: #dc3545;
         font-size: 0.85rem;
         margin-top: 0.25rem;
@@ -459,12 +478,33 @@
         flex-shrink: 0;
     }
 
+    /* Reply Submit Wrapper */
+    .reply-submit-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+    }
+
+    /* Success Message After Submit */
+    .reply-success-message {
+        padding: 0.75rem 1rem;
+        background: #d4edda;
+        color: #155724;
+        border: 2px solid #28a745;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        animation: slideIn 0.3s ease;
+    }
+
     /* Bubble Header */
     .bubble-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.5rem;
+        gap: 1rem;
     }
 
     .bubble-sender {
@@ -474,11 +514,13 @@
         align-items: center;
         gap: 0.4rem;
         font-size: 0.95rem;
+        white-space: nowrap;
     }
 
     .bubble-time {
         font-size: 0.8rem;
         color: #999;
+        white-space: nowrap;
     }
 
     /* Bubble Content */
@@ -653,3 +695,49 @@
         }
     }
 </style>
+
+<script>
+    function handleReplySubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const textarea = form.querySelector('textarea');
+        const successMessage = form.querySelector('.reply-success-message');
+        const submitButton = form.querySelector('.btn-submit-user-reply');
+
+        // Validate only this form's textarea
+        if (!textarea.value.trim()) {
+            textarea.classList.add('error-border');
+            const errorSpan = form.querySelector('.error-text') || document.createElement('span');
+            if (!form.querySelector('.error-text')) {
+                errorSpan.className = 'error-text';
+                errorSpan.textContent = 'Reply message is required.';
+                textarea.parentElement.appendChild(errorSpan);
+            }
+            return false;
+        }
+
+        // Remove error styling if any
+        textarea.classList.remove('error-border');
+        const existingError = form.querySelector('.error-text');
+        if (existingError && !existingError.textContent.includes('server')) {
+            existingError.remove();
+        }
+
+        // Show success message
+        if (successMessage) {
+            successMessage.style.display = 'block';
+        }
+
+        // Disable button
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.style.opacity = '0.6';
+            submitButton.style.cursor = 'not-allowed';
+        }
+
+        // Submit the form after a short delay
+        setTimeout(() => {
+            form.submit();
+        }, 1500);
+    }
+</script>
