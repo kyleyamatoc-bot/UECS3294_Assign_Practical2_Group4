@@ -13,23 +13,61 @@
 @endsection
 
 @section('content')
-<div class="card" style="max-width:680px; margin:0 auto;">
-    <h2 class="section-title">Book a Lane</h2>
-    <form method="POST" action="{{ route('bookings.store') }}">
-        @csrf
-        <label>Booking Date</label>
-        <input type="date" name="booking_date" value="{{ old('booking_date') }}" required>
+<div class="booking-page booking-enhanced">
+    <div class="booking-shell">
+        <div class="booking-hero">
+            <h2 class="section-title">Book a Lane</h2>
+            <p class="booking-subtitle">Choose your lane, pick your squad size, and lock in your next strike session.</p>
+        </div>
 
-        <label>Booking Time</label>
-        <input type="time" name="booking_time" value="{{ old('booking_time') }}" required>
+        <div class="card booking-card">
+        <form method="POST" action="{{ route('bookings.store') }}">
+            @csrf
+            <label><span class="field-icon">&#x1F4C5;</span> Booking Date</label>
+            <input type="date" name="booking_date" value="{{ old('booking_date') }}" required>
 
-        <label>Lane (1-10)</label>
-        <input type="number" name="lane" min="1" max="10" value="{{ old('lane') }}" required>
+            <label><span class="field-icon">&#x23F0;</span> Booking Time</label>
+            <select name="booking_time" required>
+                <option value="">Select Time</option>
+                @for($hour = 0; $hour <= 23; $hour++)
+                @php
+                $timeValue = sprintf('%02d:00', $hour);
+                $displayHour = $hour % 12 === 0 ? 12 : $hour % 12;
+                $displayMeridiem = $hour >= 12 ? 'PM' : 'AM';
+                @endphp
+                <option value="{{ $timeValue }}" {{ old('booking_time') === $timeValue ? 'selected' : '' }}>
+                    {{ $displayHour }}:00 {{ $displayMeridiem }}
+                </option>
+                @endfor
+            </select>
 
-        <label>Players (1-6)</label>
-        <input type="number" name="players" min="1" max="6" value="{{ old('players', 1) }}" required>
+            <label><span class="field-icon">&#x1F3B3;</span> Choose Lane</label>
+            <div class="lane-options">
+                @for($lane = 1; $lane <= 10; $lane++)
+                <div class="lane-option">
+                    <label>
+                        <input type="radio" name="lane" value="{{ $lane }}" {{ (string) old('lane') === (string) $lane ? 'checked' : '' }} required>
+                        <span class="lane-card">Lane {{ $lane }}</span>
+                    </label>
+                </div>
+                @endfor
+            </div>
 
-        <button class="btn" type="submit">Confirm Booking</button>
-    </form>
+            <label><span class="field-icon">&#x1F465;</span> Number of Players</label>
+            <div class="player-options">
+                @for($players = 1; $players <= 6; $players++)
+                <div class="player-option">
+                    <label>
+                        <input type="radio" name="players" value="{{ $players }}" {{ (string) old('players', 1) === (string) $players ? 'checked' : '' }} required>
+                        <span class="player-card">{{ $players }} {{ $players === 1 ? 'Player' : 'Players' }}</span>
+                    </label>
+                </div>
+                @endfor
+            </div>
+
+            <button class="btn booking-cta" type="submit">Confirm Booking</button>
+        </form>
+        </div>
+    </div>
 </div>
 @endsection
