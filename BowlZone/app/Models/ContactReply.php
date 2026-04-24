@@ -12,7 +12,9 @@ class ContactReply extends Model
     protected $fillable = [
         'contact_message_id',
         'admin_id',
+        'user_id',
         'reply_message',
+        'reply_type',
     ];
 
     public function contactMessage()
@@ -23,5 +25,15 @@ class ContactReply extends Model
     public function admin()
     {
         return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function sender()
+    {
+        return $this->reply_type === 'admin' ? $this->admin() : $this->user();
     }
 }

@@ -44,6 +44,8 @@ Route::get('/contact', [ContactController::class, 'create'])->name('contact.crea
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/contact/thank-you', [ContactController::class, 'thankYou'])->name('contact.thankyou');
 
+Route::post('/contact/{message}/reply', [ContactController::class, 'reply'])->middleware('auth')->name('contact.reply');
+
 Route::get('/store', [ProductController::class, 'index'])->name('store.index');
 Route::get('/store/products/{product:slug}', [ProductController::class, 'show'])->name('store.products.show');
 
