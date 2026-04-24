@@ -17,16 +17,6 @@
             </li>
 
             <li class="dropdown">
-                <a class="dropbtn">Events <span class="arrow">&#9662;</span></a>
-                <div class="dropdown-content">
-                    <a href="{{ route('events.index') }}">Upcoming Events</a>
-                    @auth
-                    <a href="{{ route('events.create') }}">Book Event</a>
-                    @endauth
-                </div>
-            </li>
-
-            <li class="dropdown">
                 <a class="dropbtn">Store <span class="arrow">&#9662;</span></a>
                 <div class="dropdown-content">
                     <a href="{{ route('store.index') }}">Store</a>
@@ -37,7 +27,6 @@
             </li>
 
             <li><a href="{{ route('contact.create') }}">Contact</a></li>
-            <li><a href="{{ route('terms') }}">Terms</a></li>
         </ul>
 
         <ul class="nav-right">

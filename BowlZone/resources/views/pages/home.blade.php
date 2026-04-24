@@ -11,13 +11,12 @@
         <div class="hero-content">
             @auth
             <h1>Welcome back, {{ auth()->user()->username }}!</h1>
-            <p>Your ultimate destination for bowling fun, shopping, and exciting events.</p>
+            <p>Your ultimate destination for bowling fun and shopping.</p>
             <a href="{{ route('bookings.create') }}" class="btn-primary">Book Now</a>
-            <a href="{{ route('events.index') }}" class="btn-primary">View Events</a>
             <a href="{{ route('store.index') }}" class="btn-primary">Visit Store</a>
             @else
             <h1>Welcome to BowlZone!</h1>
-            <p>Your ultimate destination for bowling fun, shopping, and exciting events.</p>
+            <p>Your ultimate destination for bowling fun and shopping.</p>
             <a href="{{ route('auth.login.show') }}" class="btn-primary">Log In to Start</a><br><br>
             <p class="hint">Don't have an account? <a href="{{ route('auth.register.show') }}">Register here</a>.</p>
             @endauth
@@ -32,11 +31,6 @@
                 <img src="{{ asset('images/home/bowlingIcon.png') }}" alt="Book a lane icon">
                 <h3>Book a Lane</h3>
                 <p>Reserve your bowling lane online quickly and easily.</p>
-            </div>
-            <div class="feature-card">
-                <img src="{{ asset('images/home/eventIcon.png') }}" alt="Events icon">
-                <h3>Upcoming Events</h3>
-                <p>Join exciting events from casual leagues to championships.</p>
             </div>
             <div class="feature-card">
                 <img src="{{ asset('images/home/storeIcon.png') }}" alt="Store icon">

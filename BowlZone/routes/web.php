@@ -6,7 +6,6 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookingPaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -55,8 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('bookings', BookingController::class);
     Route::get('/bookings/{booking}/payment', [BookingPaymentController::class, 'show'])->name('bookings.payment.show');
     Route::post('/bookings/{booking}/payment', [BookingPaymentController::class, 'process'])->name('bookings.payment.process');
-
-    Route::resource('events', EventController::class);
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');

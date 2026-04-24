@@ -12,10 +12,9 @@ class AccountController extends Controller
         $user = $request->user();
 
         $bookings = $user->bookings()->latest('booking_date')->paginate(5, ['*'], 'bookings_page');
-        $events = $user->events()->latest('event_date')->paginate(5, ['*'], 'events_page');
         $orders = $user->orders()->with('items')->latest()->paginate(5, ['*'], 'orders_page');
 
-        return view('account.index', compact('user', 'bookings', 'events', 'orders'));
+        return view('account.index', compact('user', 'bookings', 'orders'));
     }
 
     public function updateProfile(Request $request)

@@ -20,6 +20,9 @@ class ContactController extends Controller
             'last_name' => $request->last_name,
             'phone' => $request->phone,
             'email' => $request->email,
+            'subject' => $request->subject,
+            'inquiry_type' => $request->inquiry_type,
+            'priority' => $request->priority,
             'message' => $request->message,
         ]);
 
