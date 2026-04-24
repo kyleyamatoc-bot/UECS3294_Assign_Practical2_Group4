@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/bookings/{booking}/payment', [BookingPaymentController::class, 'process'])->name('bookings.payment.process');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/modify', [CartController::class, 'modify'])->name('cart.modify');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');
     Route::patch('/cart/items/{cartItem}', [CartController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{cartItem}', [CartController::class, 'destroy'])->name('cart.items.destroy');
@@ -76,6 +77,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/contact-messages/{contactMessage}/reply', [AdminController::class, 'replyContactMessage'])->name('contact-message.reply');
     Route::delete('/contact-messages/{contactMessage}', [AdminController::class, 'deleteContactMessage'])->name('contact-message.delete');
     Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
+    Route::get('/bookings/{booking}/edit', [AdminController::class, 'editBooking'])->name('bookings.edit');
+    Route::put('/bookings/{booking}', [AdminController::class, 'updateBooking'])->name('bookings.update');
+    Route::delete('/bookings/{booking}', [AdminController::class, 'deleteBooking'])->name('bookings.delete');
     Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');

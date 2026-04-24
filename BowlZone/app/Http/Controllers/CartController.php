@@ -18,6 +18,14 @@ class CartController extends Controller
         return view('store.cart', compact('cart', 'items'));
     }
 
+    public function modify()
+    {
+        $cart = $this->currentCart();
+        $items = $cart->items()->with('product')->get();
+
+        return view('store.modify-cart', compact('cart', 'items'));
+    }
+
     public function store(AddToCartRequest $request)
     {
         $cart = $this->currentCart();

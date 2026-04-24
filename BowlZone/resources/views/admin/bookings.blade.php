@@ -16,6 +16,18 @@
         <p class="admin-subtitle">Manage all bowling lane bookings</p>
     </div>
 
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if ($errors->has('booking'))
+    <div class="alert alert-error">
+        {{ $errors->first('booking') }}
+    </div>
+    @endif
+
     <div class="table-container">
         <table class="admin-table">
             <thead>
@@ -28,6 +40,7 @@
                     <th>Amount</th>
                     <th>Payment Status</th>
                     <th>Booked Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +54,24 @@
                     <td><strong>RM {{ number_format($booking->total_amount, 2) }}</strong></td>
                     <td><span class="badge badge-{{ strtolower($booking->payment_status) }}">{{ ucfirst($booking->payment_status) }}</span></td>
                     <td>{{ $booking->created_at->format('M d, Y') }}</td>
+                    <td>
+                        @if ($booking->payment_status !== 'paid')
+                        <div class="booking-actions">
+                        <a href="{{ route('admin.bookings.edit', $booking) }}" class="table-action-btn table-action-btn-edit">Modify</a>
+                        <form method="POST" action="{{ route('admin.bookings.delete', $booking) }}" class="booking-actions-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="table-action-btn table-action-btn-delete" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</button>
+                        </form>
+                        </div>
+                        @else
+                        <span class="text-muted">Locked</span>
+                        @endif
+                    </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center">No bookings found.</td>
+                    <td colspan="9" class="text-center">No bookings found.</td>
                 </tr>
                 @endforelse
             </tbody>
