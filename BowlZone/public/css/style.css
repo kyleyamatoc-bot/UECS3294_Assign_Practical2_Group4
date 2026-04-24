@@ -300,6 +300,19 @@ body {
     color: #000;
 }
 
+.btn-admin {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.btn-admin:hover {
+    background-color: #a02834;
+    color: #fff;
+}
+
 /* ======================= */
 /* Responsive styles for Header + Navigation Bar */
 /* ======================= */

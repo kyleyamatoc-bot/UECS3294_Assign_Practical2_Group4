@@ -140,4 +140,8 @@
         @endif
     </div>
 </div>
+
+<!-- Include Messages Section -->
+@include('account.messages-section')
+
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookingPaymentController;
@@ -63,4 +64,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [OrderController::class, 'show'])->name('checkout.show');
     Route::post('/checkout', [OrderController::class, 'process'])->name('checkout.process');
     Route::get('/checkout/receipt/{order}', [OrderController::class, 'receipt'])->name('checkout.receipt');
+});
+
+// Admin routes with authorization
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/contact-messages', [AdminController::class, 'contactMessages'])->name('contact-messages');
+    Route::get('/contact-messages/{contactMessage}', [AdminController::class, 'showContactMessage'])->name('contact-message.show');
+    Route::post('/contact-messages/{contactMessage}/reply', [AdminController::class, 'replyContactMessage'])->name('contact-message.reply');
+    Route::delete('/contact-messages/{contactMessage}', [AdminController::class, 'deleteContactMessage'])->name('contact-message.delete');
+    Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
+    Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
 });

@@ -31,6 +31,9 @@
 
         <ul class="nav-right">
             @auth
+            @if(auth()->user()->is_admin)
+            <li><a class="btn-admin" href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+            @endif
             <li><a class="btn-account" href="{{ route('account.index') }}">My Account</a></li>
             <li><a class="btn-log-out" href="#" onclick="confirmLogout(event)">Logout</a></li>
             @else
