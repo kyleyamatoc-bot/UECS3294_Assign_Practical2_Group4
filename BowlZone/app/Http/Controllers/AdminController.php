@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Models\ContactMessage;
 use App\Models\Booking;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
@@ -108,6 +110,81 @@ class AdminController extends Controller
             ->paginate(15);
 
         return view('admin.bookings', compact('bookings'));
+    }
+
+    /**
+     * Show edit form for a booking.
+     */
+    public function editBooking(Booking $booking)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('admin.bookings')->withErrors(['booking' => 'Paid bookings cannot be modified.']);
+        }
+
+        return view('admin.booking-edit', compact('booking'));
+    }
+
+    /**
+     * Update a booking.
+     */
+    public function updateBooking(UpdateBookingRequest $request, Booking $booking)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('admin.bookings')->withErrors(['booking' => 'Paid bookings cannot be modified.']);
+        }
+
+        $bookingAt = Carbon::parse($request->booking_date . ' ' . $request->booking_time);
+        if ($bookingAt->isPast()) {
+            return back()->withInput()->withErrors(['booking_date' => 'You cannot book a past date/time.']);
+        }
+
+        $exists = Booking::whereDate('booking_date', $request->booking_date)
+            ->whereTime('booking_time', $request->booking_time)
+            ->where('lane', $request->lane)
+            ->where('id', '!=', $booking->id)
+            ->exists();
+
+        if ($exists) {
+            return back()->withInput()->withErrors(['lane' => 'This lane and timeslot is already taken.']);
+        }
+
+        $players = (int) $request->players;
+
+        $booking->update([
+            'booking_date' => $request->booking_date,
+            'booking_time' => $request->booking_time,
+            'lane' => $request->lane,
+            'players' => $players,
+            'total_amount' => $players * 15,
+        ]);
+
+        return redirect()->route('admin.bookings')->with('success', 'Booking updated successfully.');
+    }
+
+    /**
+     * Delete a booking.
+     */
+    public function deleteBooking(Booking $booking)
+    {
+        if (!Gate::allows('view-admin-dashboard')) {
+            abort(403, 'Unauthorized access');
+        }
+
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('admin.bookings')->withErrors(['booking' => 'Paid bookings cannot be deleted.']);
+        }
+
+        $booking->delete();
+
+        return redirect()->route('admin.bookings')->with('success', 'Booking deleted successfully.');
     }
 
     /**
