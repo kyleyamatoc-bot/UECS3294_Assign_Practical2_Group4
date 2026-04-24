@@ -15,59 +15,110 @@
 @section('content')
 @include('partials.store-header')
 
-<div class="card">
-    <h2 class="section-title">My Cart</h2>
-</div>
+<div class="cart-page-layout">
+    <div class="cart-container cart-main">
+        <h1>MY CART</h1>
 
-<div class="card table-container">
-    <table>
-        <tr>
-            <th>Item</th>
-            <th>Variant</th>
-            <th>Qty</th>
-            <th>Unit</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-        @forelse($items as $item)
-        <tr>
-            <td>
-                <div style="display:flex; align-items:center; gap:12px; justify-content:center;">
-                    <img src="{{ asset(str_replace('Store/', 'store/', $item->product->image_path)) }}" alt="{{ $item->product->name }}" style="width:72px; height:auto; border-radius:8px;">
-                    <span>{{ $item->product->name }}</span>
+        @if($items->isEmpty())
+        <p style="text-align:center; margin: 24px 0;">Your cart is empty.</p>
+        <div class="cart-actions">
+            <a class="btn primary" href="{{ route('store.index') }}">CONTINUE SHOPPING</a>
+        </div>
+        @else
+    @php
+    $toCanonicalCategory = function ($rawCategory) {
+    $normalized = strtolower(trim((string) $rawCategory));
+    $normalized = str_replace([' ', '-'], '_', $normalized);
+
+    if (in_array($normalized, ['shoe', 'shoes'], true)) {
+    return 'shoes';
+    }
+
+    if (in_array($normalized, ['bowling_ball', 'bowling_balls'], true)) {
+    return 'bowling_ball';
+    }
+
+    if (in_array($normalized, ['accessory', 'accessories'], true)) {
+    return 'accessories';
+    }
+
+    return $normalized ?: 'other_items';
+    };
+
+    $categoryLabels = [
+    'shoes' => 'Bowling Shoes',
+    'bowling_ball' => 'Bowling Ball',
+    'accessories' => 'Accessories',
+    ];
+
+    $categoryOrder = [
+    'shoes' => 1,
+    'bowling_ball' => 2,
+    'accessories' => 3,
+    ];
+
+    $groupedItems = $items
+    ->groupBy(function ($item) use ($toCanonicalCategory) {
+    return $toCanonicalCategory($item->product->category);
+    })
+    ->sortBy(function ($categoryItems, $categoryKey) use ($categoryOrder) {
+    return $categoryOrder[$categoryKey] ?? 99;
+    });
+    @endphp
+
+        @foreach($groupedItems as $category => $categoryItems)
+        <section class="cart-section">
+            <h2>{{ $categoryLabels[$category] ?? ucwords(str_replace('_', ' ', $category)) }}</h2>
+
+            @foreach($categoryItems as $item)
+            <div class="cart-item">
+                <div class="cart-item-media">
+                    <img src="{{ asset(str_replace('Store/', 'store/', $item->product->image_path)) }}" alt="{{ $item->product->name }}">
                 </div>
-            </td>
-            <td>{{ $item->variant ?: '-' }}</td>
-            <td>
-                <form method="POST" action="{{ route('cart.items.update', $item->id) }}" style="display:flex; gap:8px; align-items:center; justify-content:center;">
-                    @csrf
-                    @method('PATCH')
-                    <input type="number" name="quantity" min="1" max="10" value="{{ $item->quantity }}" style="width:80px; margin:0;">
-                    <button class="btn btn-modify" type="submit">Update</button>
-                </form>
-            </td>
-            <td>RM {{ number_format((float)$item->unit_price, 2) }}</td>
-            <td>RM {{ number_format((float)$item->total_price, 2) }}</td>
-            <td>
-                <form method="POST" action="{{ route('cart.items.destroy', $item->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-cancel" type="submit">Remove</button>
-                </form>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="6">Your cart is empty.</td>
-        </tr>
-        @endforelse
-    </table>
-</div>
 
-@if($items->count())
-<div class="card">
-    <p><strong>Grand Total:</strong> RM {{ number_format((float)$cart->grand_total, 2) }}</p>
-    <a class="btn success" href="{{ route('checkout.show') }}">Proceed to Checkout</a>
+                <div class="cart-item-details">
+                    <p><strong>{{ $item->product->name }}</strong></p>
+                    @if($item->variant)
+                    <p>{{ ucfirst($item->product->variant_type ?: 'Variant') }}: {{ $item->variant }}</p>
+                    @endif
+                    <p>Qty: {{ $item->quantity }}</p>
+                    <p>Price: RM{{ number_format((float)$item->total_price, 2) }}</p>
+                </div>
+            </div>
+            @endforeach
+        </section>
+        @endforeach
+
+        <div class="cart-actions">
+            <a class="btn edit-cart" href="{{ route('cart.modify') }}">MODIFY CART</a>
+            <a class="btn primary" href="{{ route('store.index') }}">CONTINUE SHOPPING</a>
+        </div>
+        @endif
+    </div>
+
+    @php
+    $summaryItemCount = $items->sum('quantity');
+    $summaryAmount = $items->isEmpty() ? 0 : (float) $cart->grand_total;
+    @endphp
+    <aside class="checkout-summary-card cart-summary-card">
+        <h3>Order Summary</h3>
+        <div class="checkout-summary-row">
+            <span>Total Items</span>
+            <strong>{{ $summaryItemCount }}</strong>
+        </div>
+        <div class="checkout-summary-row">
+            <span>Subtotal</span>
+            <strong>RM {{ number_format($summaryAmount, 2) }}</strong>
+        </div>
+        <div class="checkout-summary-row checkout-summary-total-row">
+            <span>Total</span>
+            <strong>RM {{ number_format($summaryAmount, 2) }}</strong>
+        </div>
+        @if(!$items->isEmpty())
+        <div class="checkout-summary-action">
+            <a class="btn btn-pay" href="{{ route('checkout.show') }}">💳 Proceed to Payment</a>
+        </div>
+        @endif
+    </aside>
 </div>
-@endif
 @endsection

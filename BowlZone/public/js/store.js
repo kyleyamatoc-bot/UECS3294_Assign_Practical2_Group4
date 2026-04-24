@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkoutForm = document.getElementById("checkout-form");
     if (checkoutForm) {
         const methodSelect = document.getElementById("payment_method");
+        const methodButtons = document.querySelectorAll(".payment-method-btn");
+        const paymentMethodError = document.getElementById(
+            "payment_method_error",
+        );
         const cardField = document.getElementById("card-field");
         const bankField = document.getElementById("bank-field");
         const walletField = document.getElementById("wallet-field");
@@ -91,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 fpxFullNameError,
                 bankError,
                 accountNumberError,
+                paymentMethodError,
                 walletProviderError,
                 walletPhoneError,
                 walletFullNameError,
@@ -136,12 +141,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return true;
         }
 
+        function setActivePaymentMethodButton(value) {
+            methodButtons.forEach((btn) => {
+                btn.classList.toggle("is-active", btn.dataset.value === value);
+            });
+        }
+
         // Toggle visibility of payment method fields
         function toggleFields() {
             const val = methodSelect.value;
             cardField.style.display = val === "Card" ? "block" : "none";
             bankField.style.display = val === "FPX" ? "block" : "none";
             walletField.style.display = val === "E-Wallet" ? "block" : "none";
+            setActivePaymentMethodButton(val);
         }
 
         // Initialize field visibility
@@ -151,6 +163,14 @@ document.addEventListener("DOMContentLoaded", function () {
         methodSelect.addEventListener("change", function () {
             clearErrors();
             toggleFields();
+        });
+
+        methodButtons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                methodSelect.value = this.dataset.value || "";
+                clearErrors();
+                toggleFields();
+            });
         });
 
         // Clear errors when user starts typing
@@ -216,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!val) {
                 hasError = true;
-                setError(bankError, "Please select a payment method.");
+                setError(paymentMethodError, "Please select a payment method.");
             }
 
             // Validate Credit/Debit Card

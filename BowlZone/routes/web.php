@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/bookings/{booking}/payment', [BookingPaymentController::class, 'process'])->name('bookings.payment.process');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/modify', [CartController::class, 'modify'])->name('cart.modify');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');
     Route::patch('/cart/items/{cartItem}', [CartController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{cartItem}', [CartController::class, 'destroy'])->name('cart.items.destroy');
