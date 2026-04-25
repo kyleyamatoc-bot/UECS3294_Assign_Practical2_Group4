@@ -21,7 +21,7 @@
         </div>
 
         <div class="card booking-card">
-        <form method="POST" action="{{ route('bookings.store') }}">
+        <form method="POST" action="{{ route('bookings.store') }}" data-booking-form novalidate>
             @csrf
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -35,6 +35,7 @@
                 Booking Date
             </label>
             <input type="date" name="booking_date" value="{{ old('booking_date') }}" required>
+            <div class="form-error" data-error-for="booking_date">@error('booking_date'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -58,6 +59,7 @@
                 </option>
                 @endfor
             </select>
+            <div class="form-error" data-error-for="booking_time">@error('booking_time'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -80,6 +82,7 @@
                 </div>
                 @endfor
             </div>
+            <div class="form-error" data-error-for="lane">@error('lane'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -96,12 +99,13 @@
                 @for($players = 1; $players <= 6; $players++)
                 <div class="player-option">
                     <label>
-                        <input type="radio" name="players" value="{{ $players }}" {{ (string) old('players', 1) === (string) $players ? 'checked' : '' }} required>
+                        <input type="radio" name="players" value="{{ $players }}" {{ (string) old('players') === (string) $players ? 'checked' : '' }} required>
                         <span class="player-card">{{ $players }} {{ $players === 1 ? 'Player' : 'Players' }}</span>
                     </label>
                 </div>
                 @endfor
             </div>
+            <div class="form-error" data-error-for="players">@error('players'){{ $message }}@enderror</div>
 
             <button class="btn booking-cta" type="submit">Confirm Booking</button>
         </form>
