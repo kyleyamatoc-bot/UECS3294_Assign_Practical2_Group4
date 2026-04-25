@@ -82,7 +82,7 @@ class OrderController extends Controller
             abort(403);
         }
 
-        $order->load('items');
+        $order->load('items.product');
 
         return view('store.receipt', compact('order'));
     }
