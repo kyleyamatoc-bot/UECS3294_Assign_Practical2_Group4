@@ -263,30 +263,36 @@ body {
 
 /* Login button */
 .btn-log-in {
-    background-color: #2a9d8f;
-    color: white;
+    background-color: #dc3545;
+    color: #fff;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 4px;
     font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
+
 .btn-log-in:hover {
-    background-color: #21867a;
-    color: #333;
+    background-color: #a02834;
+    color: #fff;
 }
 
 /* Logout button */
 .btn-log-out {
     background-color: #ff2c2c;
-    color: black;
+    color: #fff;
     padding: 8px 14px;
     text-decoration: none;
     border-radius: 4px;
-}
-.btn-log-out:hover {
-    background-color: #de5d83;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
+.btn-log-out:hover {
+    background-color: #a02834;
+    color: #fff;
+}
 /* Account button */
 .btn-account {
     background-color: #e8e4e0;
