@@ -16,6 +16,29 @@
         <p class="admin-subtitle">Manage all store orders with detailed information</p>
     </div>
 
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar">
+        <form method="GET" action="{{ route('admin.orders') }}" class="search-form">
+            <div class="search-input-wrapper">
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="search-input">
+            </div>
+
+            <div class="filter-dropdown">
+                <select name="sort" class="filter-select">
+                    <option value="date_latest" {{ request('sort') === 'date_latest' ? 'selected' : '' }}>Date: Latest</option>
+                    <option value="date_earliest" {{ request('sort') === 'date_earliest' ? 'selected' : '' }}>Date: Earliest</option>
+                    <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name: A - Z</option>
+                    <option value="product_asc" {{ request('sort') === 'product_asc' ? 'selected' : '' }}>Product: A - Z</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-btn">Search</button>
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <a href="{{ route('admin.orders') }}" class="reset-filter">Reset</a>
+            </div>
+        </form>
+    </div>
+
     <div class="orders-container">
         @forelse ($orders as $order)
             <div class="order-card">

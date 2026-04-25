@@ -257,16 +257,53 @@ class AdminController extends Controller
     /**
      * Show all orders
      */
-    public function orders()
+    public function orders(Request $request)
     {
         // Check authorization
         if (!Gate::allows('view-admin-dashboard')) {
             abort(403, 'Unauthorized access');
         }
 
-        $orders = Order::with('user', 'items')
-            ->latest('created_at')
-            ->paginate(15);
+        $query = Order::with('user', 'items');
+
+        // Search by customer name, email, or product name
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($subQ) use ($search) {
+                    $subQ->where('first_name', 'like', "%{$search}%")
+                         ->orWhere('last_name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->orWhereHas('items', function($subQ) use ($search) {
+                    $subQ->where('product_name', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Sort
+        $sort = $request->input('sort', 'date_latest');
+        switch($sort) {
+            case 'name_asc':
+                $query->join('users', 'orders.user_id', '=', 'users.id')
+                      ->orderBy('users.first_name', 'asc')
+                      ->select('orders.*');
+                break;
+            case 'product_asc':
+                $query->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                      ->orderBy('order_items.product_name', 'asc')
+                      ->select('orders.*');
+                break;
+            case 'date_earliest':
+                $query->orderBy('orders.created_at', 'asc');
+                break;
+            case 'date_latest':
+            default:
+                $query->latest('orders.created_at');
+                break;
+        }
+
+        $orders = $query->paginate(15);
 
         return view('admin.orders', compact('orders'));
     }
