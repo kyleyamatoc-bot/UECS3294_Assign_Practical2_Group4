@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 @endsection
 
+@section('scripts')
+<script src="{{ asset('js/booking.js') }}"></script>
+@endsection
+
 @section('content')
 <div class="admin-wrapper">
     <div class="admin-header">
@@ -27,13 +31,14 @@
     @endif
 
     <div class="detail-container">
-        <form method="POST" action="{{ route('admin.bookings.update', $booking) }}" class="admin-form-grid">
+        <form method="POST" action="{{ route('admin.bookings.update', $booking) }}" class="admin-form-grid" data-booking-form novalidate>
             @csrf
             @method('PUT')
 
             <div class="form-field">
                 <label for="booking_date">Booking Date</label>
                 <input id="booking_date" type="date" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" required>
+                <div class="form-error" data-error-for="booking_date">@error('booking_date'){{ $message }}@enderror</div>
             </div>
 
             <div class="form-field">
@@ -52,6 +57,7 @@
                     </option>
                     @endfor
                 </select>
+                <div class="form-error" data-error-for="booking_time">@error('booking_time'){{ $message }}@enderror</div>
             </div>
 
             <div class="form-field">
@@ -64,6 +70,7 @@
                     </label>
                     @endfor
                 </div>
+                <div class="form-error" data-error-for="lane">@error('lane'){{ $message }}@enderror</div>
             </div>
 
             <div class="form-field">
@@ -76,6 +83,7 @@
                     </label>
                     @endfor
                 </div>
+                <div class="form-error" data-error-for="players">@error('players'){{ $message }}@enderror</div>
             </div>
 
             <div class="form-actions">
