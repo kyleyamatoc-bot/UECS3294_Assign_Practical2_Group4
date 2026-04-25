@@ -115,7 +115,7 @@
         </div>
         @if(!$items->isEmpty())
         <div class="checkout-summary-action">
-            <a class="btn btn-pay" href="{{ route('checkout.show') }}">� Proceed to Payment</a>
+            <a class="btn btn-pay" href="{{ route('checkout.show') }}">Proceed to Payment</a>
         </div>
         @endif
     </aside>
