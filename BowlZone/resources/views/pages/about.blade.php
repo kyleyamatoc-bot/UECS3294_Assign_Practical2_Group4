@@ -66,7 +66,7 @@
             <div class="logo-item">
                 <h3>2025 — Web & Laravel</h3>
                 <img src="{{ asset('images/BowlZone_logo(2025)_rectangle.png') }}" alt="BowlZone Logo 2025">
-                <p class="logo-desc">Refreshed by <em>Kxen</em> for our Web Application Development project and carried forward into our Advanced Web Application Development rebuild with Laravel.</p>
+                <p class="logo-desc">Redesigned by <em>Kxen</em> for our Web Application Development project and carried forward into our Advanced Web Application Development rebuild with Laravel.</p>
             </div>
         </div>
     </section>

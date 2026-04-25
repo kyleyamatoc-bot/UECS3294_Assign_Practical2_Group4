@@ -24,7 +24,7 @@
         <!-- Left Side: Contact Form -->
         <div class="contact-form-wrapper">
             <h2>Send us a Message</h2>
-            <form method="POST" action="{{ route('contact.store') }}">
+            <form method="POST" action="{{ route('contact.store') }}" novalidate>
                 @csrf
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
                         placeholder="First Name"
                         value="{{ old('first_name', auth()->user()->first_name ?? '') }}"
                         required>
-                    @error('first_name')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('first_name'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
@@ -42,7 +42,7 @@
                         placeholder="Last Name"
                         value="{{ old('last_name', auth()->user()->last_name ?? '') }}"
                         required>
-                    @error('last_name')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('last_name'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
@@ -51,7 +51,7 @@
                         placeholder="example@email.com"
                         value="{{ old('email', auth()->user()->email ?? '') }}"
                         required>
-                    @error('email')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('email'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
@@ -60,30 +60,30 @@
                         placeholder="What is your inquiry about?"
                         value="{{ old('subject') }}"
                         required>
-                    @error('subject')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('subject'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
                     <label for="inquiry_type">Inquiry Type</label>
                     <select id="inquiry_type" name="inquiry_type" required>
                         <option value="">Select an inquiry type</option>
-                        <option value="general" {{ old('inquiry_type') === 'general' ? 'selected' : '' }}>General Inquiry</option>
-                        <option value="booking" {{ old('inquiry_type') === 'booking' ? 'selected' : '' }}>Booking Question</option>
-                        <option value="complaint" {{ old('inquiry_type') === 'complaint' ? 'selected' : '' }}>Complaint</option>
+                        <option value="general" {{ old('inquiry_type') === 'general'    ? 'selected' : '' }}>General Inquiry</option>
+                        <option value="booking" {{ old('inquiry_type') === 'booking'    ? 'selected' : '' }}>Booking Question</option>
+                        <option value="complaint" {{ old('inquiry_type') === 'complaint'  ? 'selected' : '' }}>Complaint</option>
                         <option value="suggestion" {{ old('inquiry_type') === 'suggestion' ? 'selected' : '' }}>Suggestion</option>
                     </select>
-                    @error('inquiry_type')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('inquiry_type'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
                     <label for="priority">Priority Level</label>
                     <select id="priority" name="priority" required>
                         <option value="">Select priority level</option>
-                        <option value="low" {{ old('priority') === 'low' ? 'selected' : '' }}>Low</option>
+                        <option value="low" {{ old('priority') === 'low'    ? 'selected' : '' }}>Low</option>
                         <option value="medium" {{ old('priority') === 'medium' ? 'selected' : '' }}>Medium</option>
-                        <option value="high" {{ old('priority') === 'high' ? 'selected' : '' }}>High</option>
+                        <option value="high" {{ old('priority') === 'high'   ? 'selected' : '' }}>High</option>
                     </select>
-                    @error('priority')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('priority'){{ $message }}@enderror</span>
                 </div>
 
                 <div class="form-group">
@@ -92,7 +92,7 @@
                         rows="6"
                         placeholder="Type your message here..."
                         required>{{ old('message') }}</textarea>
-                    @error('message')<span class="error">{{ $message }}</span>@enderror
+                    <span class="error">@error('message'){{ $message }}@enderror</span>
                 </div>
 
                 <button type="submit" class="btn-submit">Send Message</button>
