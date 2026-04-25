@@ -34,16 +34,54 @@ class AdminController extends Controller
     /**
      * Show all contact messages
      */
-    public function contactMessages()
+    public function contactMessages(Request $request)
     {
         // Check authorization
         if (!Gate::allows('view-contact-messages')) {
             abort(403, 'Unauthorized access to contact messages');
         }
 
-        $messages = ContactMessage::with('user')
-            ->latest('created_at')
-            ->paginate(15);
+        $query = ContactMessage::with('user');
+
+        // Search by name or email
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by type
+        if ($request->filled('type')) {
+            $query->where('inquiry_type', $request->input('type'));
+        }
+
+        // Filter by priority
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->input('priority'));
+        }
+
+        // Sort
+        $sort = $request->input('sort', 'date_latest');
+        switch($sort) {
+            case 'name_asc':
+                $query->orderBy('first_name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('first_name', 'desc');
+                break;
+            case 'date_earliest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'date_latest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $messages = $query->paginate(15);
 
         return view('admin.contact-messages', compact('messages'));
     }
@@ -98,16 +136,45 @@ class AdminController extends Controller
     /**
      * Show all bookings
      */
-    public function bookings()
+    public function bookings(Request $request)
     {
         // Check authorization
         if (!Gate::allows('view-admin-dashboard')) {
             abort(403, 'Unauthorized access');
         }
 
-        $bookings = Booking::with('user')
-            ->latest('created_at')
-            ->paginate(15);
+        $query = Booking::with('user');
+
+        // Search by user name
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->whereHas('user', function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%");
+            });
+        }
+
+        // Sort
+        $sort = $request->input('sort', 'date_latest');
+        switch($sort) {
+            case 'name_asc':
+                $query->join('users', 'bookings.user_id', '=', 'users.id')
+                      ->orderBy('users.first_name', 'asc');
+                break;
+            case 'name_desc':
+                $query->join('users', 'bookings.user_id', '=', 'users.id')
+                      ->orderBy('users.first_name', 'desc');
+                break;
+            case 'date_earliest':
+                $query->orderBy('bookings.created_at', 'asc');
+                break;
+            case 'date_latest':
+            default:
+                $query->orderBy('bookings.created_at', 'desc');
+                break;
+        }
+
+        $bookings = $query->paginate(15);
 
         return view('admin.bookings', compact('bookings'));
     }
@@ -207,16 +274,45 @@ class AdminController extends Controller
     /**
      * Show all users
      */
-    public function users()
+    public function users(Request $request)
     {
         // Check authorization
         if (!Gate::allows('view-admin-dashboard')) {
             abort(403, 'Unauthorized access');
         }
 
-        $users = User::where('is_admin', false)
-            ->latest('created_at')
-            ->paginate(15);
+        $query = User::where('is_admin', false);
+
+        // Search by name, email, or username
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%");
+            });
+        }
+
+        // Sort
+        $sort = $request->input('sort', 'date_latest');
+        switch($sort) {
+            case 'name_asc':
+                $query->orderBy('first_name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('first_name', 'desc');
+                break;
+            case 'date_earliest':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'date_latest':
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $users = $query->paginate(15);
 
         return view('admin.users', compact('users'));
     }

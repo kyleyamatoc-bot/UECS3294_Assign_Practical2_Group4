@@ -16,17 +16,28 @@
         <p class="admin-subtitle">Manage all bowling lane bookings</p>
     </div>
 
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar">
+        <form method="GET" action="{{ route('admin.bookings') }}" class="search-form">
+            <div class="search-input-wrapper">
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="search-input">
+            </div>
 
-    @if ($errors->has('booking'))
-    <div class="alert alert-error">
-        {{ $errors->first('booking') }}
+            <div class="filter-dropdown">
+                <select name="sort" class="filter-select">
+                    <option value="date_latest" {{ request('sort') === 'date_latest' ? 'selected' : '' }}>Date: Latest</option>
+                    <option value="date_earliest" {{ request('sort') === 'date_earliest' ? 'selected' : '' }}>Date: Earliest</option>
+                    <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name: A - Z</option>
+                    <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Name: Z - A</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-btn">Search</button>
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <a href="{{ route('admin.bookings') }}" class="reset-filter">Reset</a>
+            </div>
+        </form>
     </div>
-    @endif
 
     <div class="table-container">
         <table class="admin-table">
