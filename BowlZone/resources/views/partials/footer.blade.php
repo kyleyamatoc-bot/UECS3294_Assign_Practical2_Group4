@@ -35,7 +35,6 @@
                 </li>
 
                 <li><a href="{{ route('contact.create') }}">Contact</a></li>
-                <li><a href="{{ route('terms') }}">Terms & Conditions</a></li>
             </ul>
         </div>
 

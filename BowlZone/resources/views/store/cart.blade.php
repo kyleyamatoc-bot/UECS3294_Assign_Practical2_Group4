@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="cart-page-layout">
     <div class="cart-container cart-main">

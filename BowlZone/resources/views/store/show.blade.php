@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="card pdp-shell">
     <div class="pdp pdp-screen">

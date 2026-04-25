@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="card" style="max-width:860px; margin:0 auto;">
     <h2 class="section-title">Order Receipt</h2>

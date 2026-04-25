@@ -678,6 +678,63 @@ img {
         box-sizing: border-box;
     }
 }
+
+/* Cart inside nav-right */
+.nav-right .cart-icon {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right .my-cart {
+    text-decoration: none;
+}
+
+.nav-right .cart-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.nav-right .my-cart:hover .cart-wrapper {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.03);
+}
+
+.nav-right .cart-wrapper img {
+    width: 32px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.nav-right .cart-wrapper span {
+    font-size: 15px;
+    font-weight: bold;
+    color: purple;
+}
+
+/* Flash effect stays the same */
+@keyframes goldFlash {
+    0% {
+        box-shadow: 0 0 0px gold;
+    }
+    50% {
+        box-shadow: 0 0 20px gold;
+    }
+    100% {
+        box-shadow: 0 0 0px gold;
+    }
+}
+
+.cart-wrapper.flash-gold {
+    animation: goldFlash 1.5s ease-in-out;
+}
 /* =======================
 	FOOTER
 ======================= */
