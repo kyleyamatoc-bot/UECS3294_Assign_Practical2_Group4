@@ -19,32 +19,32 @@
             <div class="form-group">
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" name="first_name" value="{{ old('first_name') }}" required>
-                <div id="firstNameError" class="error"></div>
+                <div id="firstNameError" class="error">@error('first_name'){{ $message }}@enderror</div>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
                 <input type="text" id="lastName" name="last_name" value="{{ old('last_name') }}" required>
-                <div id="lastNameError" class="error"></div>
+                <div id="lastNameError" class="error">@error('last_name'){{ $message }}@enderror</div>
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="{{ old('username') }}" required>
-                <div id="usernameError" class="error"></div>
+                <div id="usernameError" class="error">@error('username'){{ $message }}@enderror</div>
             </div>
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-                <div id="emailError" class="error"></div>
+                <div id="emailError" class="error">@error('email'){{ $message }}@enderror</div>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
-                <div id="passwordError" class="error"></div>
+                <div id="passwordError" class="error">@error('password'){{ $message }}@enderror</div>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" id="confirm_password" name="password_confirmation" required>
-                <div id="confirmPasswordError" class="error"></div>
+                <div id="confirmPasswordError" class="error">@error('password_confirmation'){{ $message }}@enderror</div>
             </div>
             <button type="submit" class="btn-register">Register</button>
         </form>
