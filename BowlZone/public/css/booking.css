@@ -3,28 +3,25 @@
 ======================= */
 
 .booking-page #BookingHeadTop {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .booking-page form {
-  /* max-width: 650px; */
-  margin: 2rem auto;
-  /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(135deg, #ffe60010, #fff); */
-  padding: 2.5rem;
-  border-radius: 12px;
-  border: 1px solid #f7e7a9;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #f7e7a9;
 }
 
 .booking-page form label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #444;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
 }
 
 .booking-page form input[type="text"],
@@ -34,428 +31,587 @@
 .booking-page form input[type="number"],
 .booking-page form input[type="tel"],
 .booking-page form select {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
 }
 
 .booking-page form input:focus,
 .booking-page form select:focus {
-  border-color: #ffb347;
-  box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.25);
-  outline: none;
+    border-color: #ffb347;
+    box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.25);
+    outline: none;
 }
 
-.booking-page form button {
-  display: block;
-  margin: 1.5rem auto 0 auto;
-  background: red;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.9rem 1.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+/* ---- Only apply red background to non-payment buttons ---- */
+.booking-page form button:not(.payment-method-btn) {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.booking-page form button:hover {
-  background: linear-gradient(135deg, #e24e0e, #ff7c1f);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 94, 20, 0.25);
+.booking-page form button:not(.payment-method-btn):hover {
+    background: #a02834;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.25);
 }
 
+/* ---- Payment method buttons — reset all inherited form styles ---- */
+.booking-page form .payment-method-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 84px;
+    padding: 1rem 0.9rem;
+    margin: 0;
+    text-align: left;
+    border: 1px solid #cdd5df;
+    border-radius: 8px;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: none;
+    box-shadow: none;
+}
+
+.booking-page form .payment-method-btn:hover {
+    background: #eef4fb;
+    border-color: #7ba7d8;
+    transform: none;
+    box-shadow: none;
+}
+
+.booking-page form .payment-method-btn.is-active {
+    background: #0077cc;
+    color: #fff;
+    border-color: #0077cc;
+}
+
+/* Booking payment — 3-column horizontal layout */
+.booking-page .payment-method-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0.8rem 0 0.4rem;
+}
+
+.booking-page .payment-method-btn {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100px;
+    gap: 10px;
+}
+
+.booking-page .card-payment-logos {
+    margin-left: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.booking-page .payment-method-card-label {
+    text-align: center;
+}
+
+.booking-page
+    .payment-method-btn[data-value="E-Wallet"]
+    .card-payment-logos
+    img {
+    height: 20px;
+}
+
+.booking-page .payment-method-btn[data-value="FPX"] .card-payment-logos img {
+    height: 30px;
+}
+
+.booking-page .payment-method-btn[data-value="Card"] .card-payment-logos img {
+    height: 24px;
+}
+
+/* Lane & Player Options */
 .lane-options,
 .player-options {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .lane-options {
-  grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .player-options {
-  grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .lane-option label,
 .player-option label {
-  display: block;
-  cursor: pointer;
+    display: block;
+    cursor: pointer;
 }
 
 .lane-option input[type="radio"],
 .player-option input[type="radio"] {
-  display: none;
+    display: none;
 }
 
 .lane-card,
 .player-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 56px;
-  border: 2px solid #e6e6e6;
-  border-radius: 10px;
-  background: #fff;
-  font-weight: 600;
-  color: #333;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s,
-    background-color 0.2s;
-  user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    border: 2px solid #e6e6e6;
+    border-radius: 10px;
+    background: #fff;
+    font-weight: 600;
+    color: #333;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background-color 0.2s;
+    user-select: none;
 }
 
 .lane-option label:hover .lane-card,
 .player-option label:hover .player-card {
-  border-color: #ffb089;
+    border-color: #ffb089;
 }
 
 .lane-option input[type="radio"]:checked + .lane-card,
 .player-option input[type="radio"]:checked + .player-card {
-  border-color: #ff5e14;
-  background-color: #fff7f2;
-  box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.15);
+    border-color: #ff5e14;
+    background-color: #fff7f2;
+    box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.15);
 }
 
+/* Table Container */
 .table-container {
-  width: 100%;
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  margin: 0 auto;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    margin: 0 auto;
 }
 
 .table-container table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #fff;
-  min-width: 900px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    min-width: 900px;
 }
 
 .payment-form table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: #fff;
-  min-width: 100%;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    min-width: 100%;
 }
 
 .table-container th,
 .table-container td,
 .payment-form th,
 .payment-form td {
-  padding: 14px 16px;
-  text-align: center;
-  font-size: 0.95rem;
-  white-space: nowrap;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .table-container th,
 .payment-form th {
-  background: linear-gradient(135deg, #0077cc, #3399e6);
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #0077cc, #3399e6);
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .table-container tbody tr:nth-child(even) td,
 .payment-form tbody tr:nth-child(even) td {
-  background: #f7fbff;
+    background: #f7fbff;
 }
 
 .table-container tbody tr:hover td,
 .payment-form tbody tr:hover td {
-  background: #e8f4ff;
+    background: #e8f4ff;
 }
 
 .paid {
-  color: #28a745;
-  font-weight: 600;
+    color: #28a745;
+    font-weight: 600;
 }
-
 .unpaid {
-  color: #dc3545;
-  font-weight: 600;
+    color: #dc3545;
+    font-weight: 600;
 }
 
+/* Buttons */
 .btn {
-  display: inline-block;
-  padding: 8px 14px;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  transition: all 0.2s ease;
+    display: inline-block;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
 }
 
 .btn-modify {
-  background: #0077cc;
-  color: #fff;
+    background: #0077cc;
+    color: #fff;
 }
-
 .btn-modify:hover {
-  background: #005fa3;
+    background: #005fa3;
 }
 
 .btn-cancel {
-  background: #dc3545;
-  color: #fff;
+    background: #dc3545;
+    color: #fff;
 }
-
 .btn-cancel:hover {
-  background: #a71d2a;
+    background: #a71d2a;
 }
 
 .btn-pay {
-  background: #28a745;
-  color: #fff;
+    background: #28a745;
+    color: #fff;
 }
-
 .btn-pay:hover {
-  background: #1e7e34;
+    background: #1e7e34;
 }
 
+/* Messages */
 .message {
-  text-align: center;
-  padding: 12px 16px;
-  margin: 1rem auto;
-  border-radius: 8px;
-  font-weight: 500;
-  max-width: 600px;
+    text-align: center;
+    padding: 12px 16px;
+    margin: 1rem auto;
+    border-radius: 8px;
+    font-weight: 500;
+    max-width: 600px;
 }
 
 .message.success {
-  background: #e6f9ed;
-  color: #28a745;
-  border: 1px solid #b6e2c8;
+    background: #e6f9ed;
+    color: #28a745;
+    border: 1px solid #b6e2c8;
 }
 
 .message.error {
-  background: #fdecea;
-  color: #dc3545;
-  border: 1px solid #f5c6cb;
+    background: #fdecea;
+    color: #dc3545;
+    border: 1px solid #f5c6cb;
 }
 
+/* Payment Form */
 .payment-form {
-  margin: 12px auto;
-  padding: 16px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  max-width: 1100px;
-  display: flex;
-  flex-direction: column;
+    margin: 12px auto;
+    padding: 16px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
 }
 
 .payment-form label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 6px;
-  color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
 }
 
 .payment-form input,
 .payment-form select {
-  width: 100%;
-  padding: 8px 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    box-sizing: border-box;
 }
 
 .form-error {
-  color: #b42318;
-  font-size: 0.88rem;
-  display: block;
-  margin-top: -0.75rem;
-  margin-bottom: 1rem;
-  min-height: 1.1rem;
+    color: #b42318;
+    font-size: 0.88rem;
+    display: block;
+    margin-top: -0.75rem;
+    margin-bottom: 1rem;
+    min-height: 1.1rem;
 }
 
 .booking-page form input[aria-invalid="true"],
 .booking-page form select[aria-invalid="true"] {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
 }
 
 .booking-page .lane-option input[aria-invalid="true"] + .lane-card,
 .booking-page .player-option input[aria-invalid="true"] + .player-card {
-  border-color: #dc3545;
+    border-color: #dc3545;
 }
 
 .lane-options + .form-error,
 .player-options + .form-error {
-  margin-top: 0.5rem;
+    margin-top: 0.5rem;
 }
 
+/* Booking Enhanced */
 .booking-enhanced {
-  padding: 1.5rem 1rem 2.5rem;
-  background:
-    radial-gradient(circle at 10% 12%, rgba(255, 179, 71, 0.18), transparent 42%),
-    radial-gradient(circle at 88% 92%, rgba(0, 119, 204, 0.12), transparent 38%),
-    linear-gradient(180deg, #fffef8 0%, #f7fbff 100%);
-  border-radius: 16px;
+    padding: 1.5rem 1rem 2.5rem;
+    background:
+        radial-gradient(
+            circle at 10% 12%,
+            rgba(255, 179, 71, 0.18),
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at 88% 92%,
+            rgba(0, 119, 204, 0.12),
+            transparent 38%
+        ),
+        linear-gradient(180deg, #fffef8 0%, #f7fbff 100%);
+    border-radius: 16px;
 }
 
 .booking-enhanced .booking-shell {
-  max-width: 860px;
-  margin: 0 auto;
+    max-width: 860px;
+    margin: 0 auto;
 }
 
 .booking-enhanced .booking-hero {
-  text-align: center;
-  margin-bottom: 1rem;
-  animation: bookingFadeIn 0.55s ease;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: bookingFadeIn 0.55s ease;
 }
 
 .booking-enhanced .booking-subtitle {
-  margin: 0.35rem auto 0;
-  max-width: 680px;
-  color: #475569;
-  font-size: 0.98rem;
+    margin: 0.35rem auto 0;
+    max-width: 680px;
+    color: #475569;
+    font-size: 0.98rem;
 }
 
 .booking-enhanced .booking-card {
-  max-width: 100%;
-  margin: 0 auto;
-  border-radius: 16px;
-  background: linear-gradient(180deg, #ffffff, #fffdf5);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.1);
-  animation: bookingFadeInUp 0.5s ease;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, #fffdf5);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.1);
+    animation: bookingFadeInUp 0.5s ease;
 }
 
 .booking-enhanced .field-icon {
-  display: inline-flex;
-  width: 1.05rem;
-  height: 1.05rem;
-  margin-right: 0.35rem;
-  color: #f97316;
-  vertical-align: text-bottom;
+    display: inline-flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: 0.35rem;
+    color: #f97316;
+    vertical-align: text-bottom;
 }
 
 .booking-enhanced .field-icon svg {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .booking-enhanced .lane-card,
 .booking-enhanced .player-card {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .booking-enhanced .lane-card::before,
 .booking-enhanced .player-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 70%;
-  height: 100%;
-  transform: skewX(-20deg);
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7), transparent);
-  transition: left 0.35s ease;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    transform: skewX(-20deg);
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.7),
+        transparent
+    );
+    transition: left 0.35s ease;
 }
 
 .booking-enhanced .lane-option label:hover .lane-card::before,
 .booking-enhanced .player-option label:hover .player-card::before {
-  left: 130%;
+    left: 130%;
 }
 
 .booking-enhanced .booking-cta {
-  width: 100%;
-  max-width: 360px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: #fff;
-  font-size: 1.02rem;
-  letter-spacing: 0.2px;
-  border: 0;
-  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+    width: 100%;
+    max-width: 360px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff;
+    font-size: 1.02rem;
+    letter-spacing: 0.2px;
+    border: 0;
+    box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
 }
 
 .booking-enhanced .booking-cta:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 14px 28px rgba(249, 115, 22, 0.35);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 14px 28px rgba(249, 115, 22, 0.35);
 }
 
 .booking-enhanced .booking-cta:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 @keyframes bookingFadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes bookingFadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* =======================
+    Payment Method Buttons
+======================= */
+.checkout-payment-separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1.8rem 0 2rem;
+}
+
+.checkout-payment-separator::before,
+.checkout-payment-separator::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #cfd3d8;
+}
+
+.checkout-payment-separator span {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+}
+
+.payment-method-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.payment-method-card-label {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.card-payment-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.card-payment-logos img {
+    display: block;
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* =======================
+    Responsive
+======================= */
 @media (max-width: 840px) {
-  .lane-options {
-    grid-template-columns: repeat(4, 1fr);
-  }
+    .lane-options {
+        grid-template-columns: repeat(4, 1fr);
+    }
 
-  .table-container table,
-  .payment-form table {
-    min-width: 100%;
-    font-size: 0.9rem;
-  }
+    .table-container table,
+    .payment-form table {
+        min-width: 100%;
+        font-size: 0.9rem;
+    }
 
-  .table-container th,
-  .table-container td,
-  .payment-form th,
-  .payment-form td {
-    padding: 10px 12px;
-    font-size: 0.85rem;
-  }
+    .table-container th,
+    .table-container td,
+    .payment-form th,
+    .payment-form td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 600px) {
-  .booking-enhanced {
-    padding: 1rem 0.5rem 2rem;
-  }
+    .booking-enhanced {
+        padding: 1rem 0.5rem 2rem;
+    }
 
-  .booking-enhanced .booking-card {
-    border-radius: 12px;
-  }
+    .booking-enhanced .booking-card {
+        border-radius: 12px;
+    }
 
-  .booking-enhanced .booking-cta {
-    max-width: 100%;
-  }
+    .booking-enhanced .booking-cta {
+        max-width: 100%;
+    }
 
-  .player-options {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    .player-options {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .booking-page .payment-method-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-page .payment-method-btn {
+        flex-direction: row;
+        justify-content: space-between;
+        min-height: 70px;
+    }
 }
