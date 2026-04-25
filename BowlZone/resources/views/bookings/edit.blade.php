@@ -21,7 +21,7 @@
         </div>
 
         <div class="card booking-card">
-        <form method="POST" action="{{ route('bookings.update', $booking->id) }}">
+        <form method="POST" action="{{ route('bookings.update', $booking->id) }}" data-booking-form novalidate>
             @csrf
             @method('PUT')
 
@@ -37,6 +37,7 @@
                 Booking Date
             </label>
             <input type="date" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" required>
+            <div class="form-error" data-error-for="booking_date">@error('booking_date'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -61,6 +62,7 @@
                 </option>
                 @endfor
             </select>
+            <div class="form-error" data-error-for="booking_time">@error('booking_time'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -83,6 +85,7 @@
                 </div>
                 @endfor
             </div>
+            <div class="form-error" data-error-for="lane">@error('lane'){{ $message }}@enderror</div>
 
             <label>
                 <span class="field-icon" aria-hidden="true">
@@ -105,6 +108,7 @@
                 </div>
                 @endfor
             </div>
+            <div class="form-error" data-error-for="players">@error('players'){{ $message }}@enderror</div>
 
             <button class="btn booking-cta" type="submit">Update Booking</button>
         </form>

@@ -30,4 +30,20 @@ class StoreBookingRequest extends FormRequest
             'players' => ['required', 'integer', 'min:1', 'max:6'],
         ];
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'booking_date.required' => 'Please enter a booking date.',
+            'booking_time.required' => 'Please select a booking time.',
+            'lane.required' => 'Please choose a lane.',
+            'players.required' => 'Please choose the number of players.',
+        ];
+    }
 }
+
