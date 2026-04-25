@@ -20,6 +20,29 @@
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar">
+        <form method="GET" action="{{ route('admin.users') }}" class="search-form">
+            <div class="search-input-wrapper">
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="search-input">
+            </div>
+
+            <div class="filter-dropdown">
+                <select name="sort" class="filter-select">
+                    <option value="date_latest" {{ request('sort') === 'date_latest' ? 'selected' : '' }}>Date: Latest</option>
+                    <option value="date_earliest" {{ request('sort') === 'date_earliest' ? 'selected' : '' }}>Date: Earliest</option>
+                    <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name: A - Z</option>
+                    <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Name: Z - A</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-btn">Search</button>
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <a href="{{ route('admin.users') }}" class="reset-filter">Reset</a>
+            </div>
+        </form>
+    </div>
+
     <div class="table-container">
         <table class="admin-table">
             <thead>
@@ -43,12 +66,12 @@
                     </td>
                     <td>{{ $user->created_at->format('M d, Y') }}</td>
                     <td>
-                        <div class="action-links">
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="action-link">Edit</a>
-                            <form method="POST" action="{{ route('admin.users.delete', $user->id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <div class="booking-actions">
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="table-action-btn table-action-btn-edit">Edit</a>
+                            <form method="POST" action="{{ route('admin.users.delete', $user->id) }}" class="booking-actions-form" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="action-link action-link-danger">Delete</button>
+                                <button type="submit" class="table-action-btn table-action-btn-delete">Delete</button>
                             </form>
                         </div>
                     </td>
@@ -68,23 +91,4 @@
     </div>
     @endif
 </div>
-
-<style>
-    .action-links {
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-    }
-
-    .action-links form {
-        margin: 0;
-    }
-
-    .action-links button {
-        border: none;
-        background: none;
-        padding: 0;
-        cursor: pointer;
-    }
-</style>
 @endsection
