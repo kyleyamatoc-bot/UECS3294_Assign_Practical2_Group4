@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         subject: {
             required: true,
-            pattern: /^.{2,20}$/,
-            message: "Subject must be between 2 and 20 characters.",
+            pattern: /^.{2,100}$/,
+            message: "Subject must be between 2 and 100 characters.",
         },
         inquiry_type: {
             required: true,
