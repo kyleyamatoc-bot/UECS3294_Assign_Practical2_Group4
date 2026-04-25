@@ -16,11 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
             message:
                 "Last name can only contain letters, spaces, apostrophes, or hyphens.",
         },
-        phone: {
-            required: false,
-            pattern: /^\d{10,15}$/,
-            message: "Phone number must be 10-15 digits.",
-        },
         email: {
             required: true,
             pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
@@ -28,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         subject: {
             required: true,
-            pattern: /^.{5,100}$/,
-            message: "Subject must be between 5 and 100 characters.",
+            pattern: /^.{2,20}$/,
+            message: "Subject must be between 2 and 20 characters.",
         },
         inquiry_type: {
             required: true,
@@ -41,8 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         message: {
             required: true,
-            minLength: 20,
-            message: "Message must be at least 20 characters.",
+            minLength: 10,
+            message: "Message must be at least 10 characters.",
         },
     };
 

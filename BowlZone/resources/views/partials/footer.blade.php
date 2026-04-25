@@ -13,8 +13,29 @@
             <ul class="footer-links">
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('about') }}">About</a></li>
-                <li><a href="{{ route('store.index') }}">Store</a></li>
+
+                <li class="dropdown-footer">
+                    <a href="#">Booking <span class="arrow">&#9662;</span></a>
+                    <ul class="dropdown-content-footer">
+                        <li><a href="{{ route('bookings.create') }}">Book a Lane</a></li>
+                        @auth
+                        <li><a href="{{ route('bookings.index') }}">View Bookings</a></li>
+                        @endauth
+                    </ul>
+                </li>
+
+                <li class="dropdown-footer">
+                    <a href="#">Store <span class="arrow">&#9662;</span></a>
+                    <ul class="dropdown-content-footer">
+                        <li><a href="{{ route('store.index') }}">Browse Store</a></li>
+                        @auth
+                        <li><a href="{{ route('cart.index') }}">My Cart</a></li>
+                        @endauth
+                    </ul>
+                </li>
+
                 <li><a href="{{ route('contact.create') }}">Contact</a></li>
+                <li><a href="{{ route('terms') }}">Terms & Conditions</a></li>
             </ul>
         </div>
 

@@ -49,11 +49,6 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class);
     }
 
-    public function events()
-    {
-        return $this->hasMany(Event::class);
-    }
-
     public function cart()
     {
         return $this->hasOne(Cart::class);
