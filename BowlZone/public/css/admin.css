@@ -1011,9 +1011,9 @@
 
 /* Search & Filter Bar */
 .search-filter-bar {
-    background: #fff;
+    background: transparent;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 0;
     margin-bottom: 0.3rem;
     box-shadow: none;
     position: static;
