@@ -20,7 +20,7 @@
             <img src="{{ asset(str_replace('Store/', 'store/', $product->image_path)) }}" alt="{{ $product->name }}">
         </div>
         <div class="pdp-info">
-            <h2 class="pdp-screen-title">{{ $product->name }}</h2>
+            <h2 class="pdp-screen-title" @if($product->name === "Dexter Power Frame (Women's)") style="white-space: nowrap; overflow: visible; text-overflow: unset;" @endif>{{ $product->name }}</h2>
             <p class="pdp-screen-price">RM{{ number_format((float)$product->price, 2) }}</p>
 
             @auth

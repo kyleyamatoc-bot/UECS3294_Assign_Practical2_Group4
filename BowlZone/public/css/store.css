@@ -1648,7 +1648,7 @@ select.invalid {
 .store-page .pdp-screen {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     gap: 36px;
     max-width: 1360px;
@@ -1669,42 +1669,42 @@ select.invalid {
 }
 
 .store-page .pdp-screen .pdp-info {
-    flex: 0 0 540px;
-    max-width: 540px;
-    margin: 0;
-    text-align: left;
-}
+        flex: 0 0 540px;
+        max-width: 540px;
+        margin: 0;
+        padding-left: 24px;
+        text-align: left;
+    }
 
-.store-page .pdp-screen-title {
-    font-size: 35px;
-    line-height: 1.2;
-    margin: 0 0 24px;
-    color: #2f343a;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    .store-page .pdp-screen-title {
+        font-size: 35px;
+        line-height: 1.2;
+        margin: 0 0 24px;
+        color: #2f343a;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-.store-page .pdp-screen-price {
-    font-size: 35px;
-    margin: 0 0 26px;
-    color: #2f343a;
-    font-weight: 700;
-}
+    .store-page .pdp-screen-price {
+        font-size: 35px;
+        margin: 0 0 26px;
+        color: #0b3dff;
+        font-weight: 700;
+    }
 
-.store-page .pdp-screen-form label {
-    display: block;
-    margin: 0 0 10px;
-    font-size: 22px;
-    font-weight: 500;
-    color: #50565f;
-}
+    .store-page .pdp-screen-form label {
+        display: block;
+        margin: 0 0 10px;
+        font-size: 22px;
+        font-weight: 500;
+        color: #50565f;
+    }
 
-.store-page .pdp-screen-form label[for="variant"] + select {
-    margin-top: 6px;
-}
-
+    .store-page .pdp-screen-form label[for="variant"] + select {
+        margin-top: 6px;
+    }
 .store-page .pdp-screen-qty-group {
     display: flex;
     flex-direction: column;
