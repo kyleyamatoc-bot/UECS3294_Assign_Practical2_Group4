@@ -100,7 +100,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="card receipt-order-card">
     <h2 class="section-title" style="text-align:center;">Order Receipt</h2>

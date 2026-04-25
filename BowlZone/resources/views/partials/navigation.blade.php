@@ -31,6 +31,7 @@
 
         <ul class="nav-right">
             @auth
+            <li class="cart-icon">@include('partials.store-header')</li>
             <li class="dropdown user-dropdown">
                 <a class="dropbtn user-dropbtn">
                     <span class="user-avatar">{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</span>

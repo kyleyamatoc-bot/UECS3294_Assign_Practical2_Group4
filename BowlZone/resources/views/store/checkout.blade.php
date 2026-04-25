@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="checkout-page" style="max-width: 860px; margin: 2rem auto; padding: 0 1.5rem;">
     <h2 class="section-title checkout-title">Checkout</h2>

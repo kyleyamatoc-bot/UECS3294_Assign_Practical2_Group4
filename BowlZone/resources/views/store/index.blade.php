@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-@include('partials.store-header')
 
 <div class="store-content-width">
     <div class="store-hero-wrap">
