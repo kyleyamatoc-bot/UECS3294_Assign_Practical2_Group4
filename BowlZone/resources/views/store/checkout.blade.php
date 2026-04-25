@@ -28,7 +28,7 @@
                 <input id="email" name="email" type="email" value="{{ old('email', auth()->user()->email) }}" placeholder="Email Address" required>
 
                 <label>Phone</label>
-                <input id="phone" name="phone" type="tel" inputmode="numeric" value="{{ old('phone') }}" placeholder="10-11 digits" required>
+                <input id="phone" name="phone" type="tel" inputmode="numeric" maxlength="11" pattern="[0-9]{10,11}" value="{{ old('phone') }}" placeholder="10-11 digits" required>
 
                 <div class="checkout-payment-separator">
                     <span>How would you like to pay?</span>
@@ -36,9 +36,29 @@
 
                 <input id="payment_method" name="payment_method" type="hidden" value="{{ old('payment_method') }}">
                 <div class="payment-method-buttons" role="group" aria-label="Select Payment Method">
-                    <button type="button" class="payment-method-btn{{ old('payment_method') === 'Card' ? ' is-active' : '' }}" data-value="Card">Credit/Debit Card</button>
-                    <button type="button" class="payment-method-btn{{ old('payment_method') === 'FPX' ? ' is-active' : '' }}" data-value="FPX">Online Banking</button>
-                    <button type="button" class="payment-method-btn{{ old('payment_method') === 'E-Wallet' ? ' is-active' : '' }}" data-value="E-Wallet">E-Wallet</button>
+                    <button type="button" class="payment-method-btn payment-method-card-btn{{ old('payment_method') === 'Card' ? ' is-active' : '' }}" data-value="Card">
+                        <span class="payment-method-card-label">Credit/Debit Card</span>
+                        <span class="card-payment-logos" aria-label="Accepted card types">
+                            <img src="{{ asset('images/store/visa_logo.gif') }}" alt="Visa" loading="lazy">
+                            <img src="{{ asset('images/store/mastercard_logo.png') }}" alt="Mastercard" loading="lazy">
+                        </span>
+                    </button>
+                    <button type="button" class="payment-method-btn{{ old('payment_method') === 'FPX' ? ' is-active' : '' }}" data-value="FPX">
+                        <span class="payment-method-card-label">Online Banking</span>
+                        <span class="card-payment-logos" aria-label="Accepted online banking types">
+                            <img src="{{ asset('images/store/fpx_logo.jpg') }}" alt="FPX" loading="lazy">
+                        </span>
+                    </button>
+                    <button type="button" class="payment-method-btn{{ old('payment_method') === 'E-Wallet' ? ' is-active' : '' }}" data-value="E-Wallet">
+                        <span class="payment-method-card-label">E-Wallet</span>
+                        <span class="card-payment-logos" aria-label="Accepted e-wallets">
+                            <img src="{{ asset('images/store/tng_logo.png') }}" alt="Touch 'n Go" loading="lazy">
+                            <img src="{{ asset('images/store/grabpay_logo.png') }}" alt="GrabPay" loading="lazy">
+                            <img src="{{ asset('images/store/boost_logo.png') }}" alt="Boost" loading="lazy">
+                            <img src="{{ asset('images/store/shopeepay_logo.png') }}" alt="ShopeePay" loading="lazy">
+                            <img src="{{ asset('images/store/mae_logo.webp') }}" alt="MAE" loading="lazy">
+                        </span>
+                    </button>
                 </div>
                 <span id="payment_method_error" class="form-error"></span>
 

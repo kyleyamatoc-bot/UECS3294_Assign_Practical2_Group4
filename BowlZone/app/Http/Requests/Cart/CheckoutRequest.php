@@ -27,9 +27,9 @@ class CheckoutRequest extends FormRequest
             'full_name' => ['required', 'string', 'max:150'],
             'email' => ['required', 'email', 'max:150'],
             'phone' => ['required', 'regex:/^\d{10,11}$/'],
-            'payment_method' => ['required', 'in:Credit/Debit Card,FPX Online Banking,E-Wallet'],
-            'card_number' => ['required_if:payment_method,Credit/Debit Card', 'nullable', 'digits:16'],
-            'bank' => ['required_if:payment_method,FPX Online Banking', 'nullable', 'string', 'max:40'],
+            'payment_method' => ['required', 'in:Card,FPX,E-Wallet'],
+            'card_number' => ['required_if:payment_method,Card', 'nullable', 'digits:16'],
+            'bank' => ['required_if:payment_method,FPX', 'nullable', 'string', 'max:40'],
             'wallet_phone' => ['required_if:payment_method,E-Wallet', 'nullable', 'regex:/^\d{10,11}$/'],
         ];
     }

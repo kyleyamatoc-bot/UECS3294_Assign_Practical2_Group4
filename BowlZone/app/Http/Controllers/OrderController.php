@@ -34,9 +34,9 @@ class OrderController extends Controller
         $method = $request->payment_method;
         $reference = null;
 
-        if ($method === 'Credit/Debit Card') {
+        if ($method === 'Card') {
             $reference = 'CARD-' . substr($request->card_number, -4);
-        } elseif ($method === 'FPX Online Banking') {
+        } elseif ($method === 'FPX') {
             $reference = 'FPX-' . strtoupper(substr($request->bank, 0, 3)) . rand(1000, 9999);
         } elseif ($method === 'E-Wallet') {
             $reference = 'WALLET-' . substr($request->wallet_phone, -4);

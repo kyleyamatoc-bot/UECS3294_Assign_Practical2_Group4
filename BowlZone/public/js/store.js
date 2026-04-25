@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const bankField = document.getElementById("bank-field");
         const walletField = document.getElementById("wallet-field");
 
+        const phone = document.getElementById("phone");
+
         const cardholderName = document.getElementById("cardholder_name");
         const cardNumber = document.getElementById("card_number");
         const expiryDate = document.getElementById("expiry_date");
@@ -218,6 +220,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (accountNumber) {
             accountNumber.addEventListener("input", function () {
                 this.value = this.value.replace(/\D/g, "").slice(0, 16);
+            });
+        }
+
+        // Format checkout phone number input (only digits, max 11)
+        if (phone) {
+            phone.addEventListener("input", function () {
+                this.value = this.value.replace(/\D/g, "").slice(0, 11);
             });
         }
 
