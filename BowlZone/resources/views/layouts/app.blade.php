@@ -35,6 +35,16 @@
     @include('partials.footer')
     <script src="{{ asset('js/script.js') }}"></script>
     @yield('scripts')
+    <script>
+        document.querySelectorAll('.message').forEach(function(msg) {
+            setTimeout(function() {
+                msg.style.opacity = '0';
+                setTimeout(function() {
+                    msg.remove();
+                }, 500);
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>

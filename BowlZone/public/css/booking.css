@@ -282,10 +282,28 @@
 }
 
 .form-error {
-  color: red;
-  font-size: 14px;
+  color: #b42318;
+  font-size: 0.88rem;
   display: block;
-  margin-top: 4px;
+  margin-top: -0.75rem;
+  margin-bottom: 1rem;
+  min-height: 1.1rem;
+}
+
+.booking-page form input[aria-invalid="true"],
+.booking-page form select[aria-invalid="true"] {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}
+
+.booking-page .lane-option input[aria-invalid="true"] + .lane-card,
+.booking-page .player-option input[aria-invalid="true"] + .player-card {
+  border-color: #dc3545;
+}
+
+.lane-options + .form-error,
+.player-options + .form-error {
+  margin-top: 0.5rem;
 }
 
 .booking-enhanced {

@@ -19,7 +19,7 @@
             <div class="form-group">
                 <label for="email">Enter your registered email:</label>
                 <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-                <div id="emailError" class="error"></div>
+                <div id="emailError" class="error">@error('email'){{ $message }}@enderror</div>
             </div>
             <button type="submit" class="btn-forgot">Continue</button>
         </form>

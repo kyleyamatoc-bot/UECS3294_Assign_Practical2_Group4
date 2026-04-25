@@ -19,13 +19,13 @@
             <div class="form-group">
                 <label>Email or Username:</label>
                 <input type="text" id="loginInput" name="login" value="{{ old('login') }}" required>
-                <div id="loginInputError" class="error"></div>
+                <div id="loginInputError" class="error">@error('login'){{ $message }}@enderror</div>
             </div>
 
             <div class="form-group">
                 <label>Password:</label>
                 <input type="password" id="loginPassword" name="password" required>
-                <div id="loginPasswordError" class="error"></div>
+                <div id="loginPasswordError" class="error">@error('password'){{ $message }}@enderror</div>
             </div>
 
             <button type="submit" class="btn-login">Login</button>
