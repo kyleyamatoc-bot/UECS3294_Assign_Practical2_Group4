@@ -16,6 +16,15 @@ class CheckoutRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->filled('card_number')) {
+            $this->merge([
+                'card_number' => str_replace(' ', '', $this->card_number),
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

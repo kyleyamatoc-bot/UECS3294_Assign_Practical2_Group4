@@ -28,7 +28,6 @@ class CreateBookingsTable extends Migration
             $table->string('payment_reference')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
-
             $table->unique(['booking_date', 'booking_time', 'lane']);
             $table->index(['user_id', 'booking_date']);
         });

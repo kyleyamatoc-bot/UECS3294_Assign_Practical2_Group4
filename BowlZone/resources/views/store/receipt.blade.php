@@ -54,17 +54,19 @@
         gap: 0.85rem;
     }
     .receipt-product-image {
-        width: 60px;
-        height: 60px;
+        width: 60px !important;
+        height: 60px !important;
         min-width: 60px;
         min-height: 60px;
         max-width: 60px;
         max-height: 60px;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: 8px;
         border: 1px solid #ddd;
         background: #fff;
         display: block;
+        flex-shrink: 0;
     }
     .receipt-order-card {
         max-width: 920px;
