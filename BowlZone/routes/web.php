@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// All user can access these pages
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 
+// Guest Users can only access these pages. Registerd User and Admin can access these pages as well
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login.show');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
@@ -38,17 +40,24 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('auth.reset');
 });
 
+// Guest Users cannot access these pages. Registered User and Admin can access these pages. 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');
 
+// All users can access these contact pages
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/contact/thank-you', [ContactController::class, 'thankYou'])->name('contact.thankyou');
 
+// Only Registered users can reply to messages from the contact page. 
+// Admins can also reply to messages from the admin panel.
 Route::post('/contact/{message}/reply', [ContactController::class, 'reply'])->middleware('auth')->name('contact.reply');
 
+//All users can access the store and product pages.
 Route::get('/store', [ProductController::class, 'index'])->name('store.index');
 Route::get('/store/products/{product:slug}', [ProductController::class, 'show'])->name('store.products.show');
 
+// Only Registered users can access the account, booking, cart, and checkout pages. 
+// Admins can also access these pages.
 Route::middleware('auth')->group(function () {
     Route::get('/account', [AccountController::class, 'index'])->name('account.index');
     Route::patch('/account/profile', [AccountController::class, 'updateProfile'])->name('account.profile.update');
@@ -69,7 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/receipt/{order}', [OrderController::class, 'receipt'])->name('checkout.receipt');
 });
 
-// Admin routes with authorization
+// Only Admin can access these pages. Registered users and Guest Users cannot access these pages.
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/contact-messages', [AdminController::class, 'contactMessages'])->name('contact-messages');
